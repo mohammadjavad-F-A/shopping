@@ -1,0 +1,122 @@
+{% extends 'master.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ثبت محل سکونت</title>
+        <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'assets/css/style-pink-navbar.css' %}">
+        <style>
+            body {
+                font-family: 'Vazir', sans-serif;
+                background: #f7f8fa;
+                margin: 0;
+                padding: 0;
+            }
+
+            .address-section {
+                max-width: 520px;
+                margin: 120px auto 32px auto;
+                background: #fff;
+                border-radius: 32px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+                padding: 48px 32px;
+            }
+
+            .address-title {
+                font-size: 1.6rem;
+                color: #0099cc;
+                margin-bottom: 24px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .address-form {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .address-form label {
+                font-size: 1.05rem;
+                color: #444;
+                margin-bottom: 6px;
+            }
+
+            .address-form input, .address-form textarea {
+                font-family: inherit;
+                font-size: 1rem;
+                border: 1px solid #e0e0e0;
+                border-radius: 10px;
+                padding: 10px;
+                outline: none;
+            }
+
+            .address-form textarea {
+                resize: vertical;
+                min-height: 60px;
+            }
+
+            .address-form button {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                padding: 10px 28px;
+                font-size: 1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: background 0.2s;
+                margin-top: 12px;
+            }
+
+            .address-form button:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            @media (max-width: 600px) {
+                .address-section {
+                    padding: 24px 8px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="address-section">
+        <div class="address-title">تغییرات محل سکونت</div>
+        <form class="address-form" action="{% url 'change_address' Address.id %}" method="post">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+                    {% if Address.user_id == user.id %}
+                        <label for="address">آدرس کامل</label>
+                        <input type="number" value="{{ Address.id }}" name="id" hidden="hidden">
+                        <label for="city">شهر</label>
+                        <input type="text" id="city" name="city" value="{{ Address.city }}" required>
+                        <label for="district">محله</label>
+                        <input type="text" id="district" name="district" value="{{ Address.district }}" required>
+                        <label for="street">خیابان</label>
+                        <input type="text" id="street" name="street" value="{{ Address.street }}" required>
+                        <label for="alley">کوچه</label>
+                        <input type="text" id="alley" name="alley" value="{{ Address.alley }}">
+                        <label for="plaque">پلاک</label>
+                        <input type="text" id="plaque" name="plaque" value="{{ Address.plaque }}" required>
+                        <label for="floor">طبقه</label>
+                        <input type="text" id="floor" name="floor" value="{{ Address.floor }}">
+                        <label for="unit">واحد</label>
+                        <input type="text" id="unit" name="unit" value="{{ Address.unit }}">
+                        <label for="postal">کد پستی</label>
+                        <input type="text" id="postal" name="postal" value="{{ Address.postal }}" required>
+                        <button type="submit">ثبت تغییرات</button>
+                    {% endif %}
+            {% endif %}
+
+        </form>
+    </div>
+
+    </body>
+{% endblock content %}
+</html>

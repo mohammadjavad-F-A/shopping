@@ -1,0 +1,58 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سفارش‌های من</title>
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+  <style>
+    body { font-family: 'Vazir', sans-serif; background: #f7f8fa; margin: 0; padding: 0; }
+    .orders-section { max-width: 900px; margin: 120px auto 32px auto; background: #fff; border-radius: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); padding: 48px 32px; }
+    .orders-title { font-size: 1.6rem; color: #0099cc; margin-bottom: 32px; font-weight: bold; text-align: center; }
+    .orders-list { display: flex; flex-direction: column; gap: 24px; }
+    .order-card { background: #f8fcff; border-radius: 20px; box-shadow: 0 2px 12px rgba(0,153,204,0.08); padding: 24px 18px; display: flex; align-items: center; gap: 24px; }
+    .order-card img { width: 80px; height: 80px; border-radius: 16px; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .order-info { flex: 1; }
+    .order-title { font-size: 1.15rem; color: #0099cc; font-weight: 500; margin-bottom: 6px; }
+    .order-date { font-size: 0.98rem; color: #666; margin-bottom: 8px; }
+    .order-status { font-size: 1rem; color: #00c853; font-weight: bold; margin-bottom: 8px; }
+    .order-price { font-size: 1.05rem; color: #0099cc; font-weight: bold; }
+    .order-actions { display: flex; gap: 12px; }
+    .order-btn { background: linear-gradient(90deg,#0099cc,#00e6d0); color: #fff; border: none; border-radius: 10px; padding: 8px 20px; font-size: 1rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s; }
+    .order-btn:hover { background: linear-gradient(90deg,#00e6d0,#0099cc); }
+    @media (max-width: 900px) { .orders-section { padding: 24px 8px; } .order-card { flex-direction: column; align-items: flex-start; gap: 12px; } }
+  </style>
+</head>
+<body>
+
+  <div class="orders-section">
+    <div class="orders-title">سفارش‌های من</div>
+    <div class="orders-list">
+        {% for my_order in my_orders %}
+        	<div class="order-card">
+        <img src="{{ my_order.product.image_main.url }}" alt="محصول">
+        <div class="order-info">
+          <div class="order-title">{{ my_order.product.name }}</div>
+          <div class="order-date">تاریخ سفارش: {{ my_order.order.created_at }}</div>
+          <div class="order-status">وضعیت: {{ my_order.get_status_display }}</div>
+          <div class="order-price">{{ my_order.product.price | intcomma}} تومان</div>
+        </div>
+        <div class="order-actions">
+          <a class="order-btn" href="{% url 'products' my_order.product.id%}">مشاهده جزئیات</a>
+          <button class="order-btn">پیگیری سفارش</button>
+        </div>
+      </div>
+        {% endfor %}
+        
+      
+    </div>
+  </div>
+
+</body>
+{% endblock content %}
+</html>

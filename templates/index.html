@@ -1,0 +1,106 @@
+
+{% extends 'master.html' %}
+{% load static %}
+{% load humanize %}
+
+
+<!-- فونت رسمی از CDN (Vazir) -->
+ <html>
+ {% block content %}
+<head>
+<link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+
+
+</head>
+
+<body dir="ltr">
+
+
+<div class="search-bar-wrap" style="width:100%;display:flex;justify-content:center;margin-top:80px;margin-bottom:24px;">
+  <form class="search-bar-form" style="display:flex;align-items:center;max-width:480px;width:100%;background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,153,204,0.08);padding:8px 16px;" action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+      <input type="text" class="search-bar-input" placeholder="جست‌وجوی محصول، دسته‌بندی یا برند..." style="flex:1;border:none;font-size:1.1rem;padding:8px 12px;border-radius:12px;outline:none;background:transparent;" name="searched">
+    <button type="submit" class="search-bar-btn" style="background:linear-gradient(90deg,#0099cc,#00e6d0);color:#fff;border:none;border-radius:10px;padding:8px 20px;font-size:1rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-right:8px;">جست‌وجو</button>
+  </form>
+</div>
+<!-- باکس شیشه‌ای محصول زیر نوبار -->
+{% for foo in special %}
+	<div class="product-glass-box">
+  <div class="product-image">
+    <img src="{{ foo.product.image_main.url }}" alt="محصول" >
+  </div>
+  <div class="product-info">
+    <h2>{{ foo.product.name }}</h2>
+    <p>{{ foo.title }}</p>
+ <a class="buy-btn" href="{% url 'products' foo.product.id %}">خرید محصول</a>
+  </div>
+</div>
+{% endfor %}
+
+
+
+<!-- دایره‌های دسته‌بندی زیر باکس محصول -->
+<div class="category-title" style="margin-bottom: 48px; border-bottom: 2px solid #e0f7fa; padding-bottom: 12px; background: #f8fcff; border-radius: 16px; width: fit-content; margin-right: auto; margin-left: auto; box-shadow: 0 2px 12px rgba(0,153,204,0.08);">دسته‌بندی‌ها</div>
+<div class="category-circles">
+    {% for category in categories %}
+    	<div class="cat-item" style="--i:4"><a href="{% url 'category_detail' category.slug %}" class="cat-circle"><img src="{{ category.image.url }}" alt="لوازم منزل"></a><div class="cat-label">{{ category.name }}</div></div>
+    {% endfor %}
+    
+  
+</div>
+<!-- عنوان محصولات ما -->
+<div class="products-title" style="margin-top: 64px; margin-bottom: 32px; border-bottom: 2px solid #0099cc; padding-bottom: 12px; background: #f8fcff; border-radius: 16px; width: fit-content; margin-right: auto; margin-left: auto; box-shadow: 0 2px 12px rgba(0,153,204,0.08);">محصولات ما</div>
+<div class="products-list">
+    {% for product in products %}
+    	<div class="product-card">
+    <img class="product-card-img" src="{{ product.image_main.url }}" alt="محصول ۱">
+    <div class="product-card-info">
+      <h3 class="product-card-title">{{ product.name }}</h3>
+      <div class="product-card-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+      </div>
+      <p class="product-card-desc">{{ product.description }}</p>
+      <div class="product-card-prices">
+        <span class="product-card-price-old">{{ product.old_price | intcomma }}</span>
+        <span class="product-card-price-new">{{ product.price | intcomma}}</span>
+      </div>
+        <a href="{% url 'products' product.id %}" class="add-to-cart-btn">رفتن به صفحه محصول</a>
+    </div>
+  </div>
+    {% endfor %}
+    
+  
+
+ 
+</div>
+<div class="more-products-btn-wrap">
+  <a href="{% url 'more_products' %}" class="more-products-btn">دیدن محصولات بیشتر</a>
+</div>
+<!-- بخش محصول ویژه -->
+<div class="special-product-section">
+  <div class="special-product-box">
+    <div class="special-product-info">
+      <h2>محصول ویژه فروشگاه</h2>
+      <p>این محصول ویژه با کیفیت عالی و امکانات خاص، مناسب برای مشتریان خاص فروشگاه ماست. برای مشاهده جزئیات بیشتر و خرید، ویدیو را ببینید و روی دکمه زیر کلیک کنید.</p>
+      <a class="buy-btn">خرید محصول ویژه</a>
+    </div>
+    <div class="special-product-video">
+      <div class="video-square">
+        <video controls poster="assets/img/img_avatar.png">
+          <source src="assets/video/special-product.mp4" type="video/mp4">
+          مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- برای تست نوبار -->
+
+
+</div>
+
+</body>
+
+{% endblock content %}
+</html>

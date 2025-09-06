@@ -1,0 +1,291 @@
+{% extends 'master.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>پروفایل کاربری</title>
+        <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+        <style>
+            .profile-main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 80vh;
+                padding-top: 64px;
+            }
+
+            .profile-circle-large {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #00e6e6 0%, #0099cc 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                box-shadow: 0 4px 24px rgba(0, 153, 204, 0.10);
+                margin-bottom: 32px;
+                position: relative;
+            }
+
+            .profile-circle-large img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                display: block;
+            }
+
+            .profile-upload-label {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #0099cc;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: background-color 0.3s;
+            }
+
+            .profile-upload-label:hover {
+                background-color: #0077a3;
+            }
+
+            .profile-leaves {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 32px 64px;
+                margin-top: -60px;
+                margin-bottom: 32px;
+            }
+
+            .profile-leaf {
+                background: linear-gradient(90deg, #e0f7fa 0%, #fff 100%);
+                border-radius: 32px 32px 32px 32px;
+                box-shadow: 0 2px 12px rgba(0, 153, 204, 0.08);
+                padding: 18px 32px;
+                min-width: 120px;
+                font-size: 1.1rem;
+                color: #0099cc;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                transition: transform 0.2s;
+            }
+
+            .profile-leaf.left {
+                transform: rotate(-12deg);
+            }
+
+            .profile-leaf.right {
+                transform: rotate(12deg);
+            }
+
+            @media (max-width: 600px) {
+                .profile-main {
+                    padding-top: 24px;
+                }
+
+                .profile-leaves {
+                    gap: 18px 8px;
+                    margin-top: -30px;
+                }
+
+                .profile-leaf {
+                    padding: 10px 12px;
+                    font-size: 1rem;
+                }
+
+                .profile-circle-large {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                .profile-circle-large img {
+                    width: 100px;
+                    height: 100px;
+                }
+            }
+
+            .profile-remove-btn {
+                background: linear-gradient(90deg, #ff5252 0%, #ffb300 100%);
+                color: #fff;
+                border: none;
+                border-radius: 14px;
+                padding: 10px 32px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                box-shadow: 0 2px 8px rgba(255, 82, 82, 0.10);
+                cursor: pointer;
+                transition: background 0.2s, transform 0.2s;
+                margin-top: 8px;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .profile-remove-btn:hover {
+                background: linear-gradient(90deg, #ffb300 0%, #ff5252 100%);
+                transform: scale(1.04);
+            }
+
+            .profile-save-btn {
+                background: linear-gradient(90deg, #0099cc 0%, #00e6e6 100%);
+                color: #fff;
+                border: none;
+                border-radius: 14px;
+                padding: 10px 32px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                box-shadow: 0 2px 8px rgba(0, 153, 204, 0.10);
+                cursor: pointer;
+                transition: background 0.2s, transform 0.2s;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .profile-save-btn:hover {
+                background: linear-gradient(90deg, #00e6e6 0%, #0099cc 100%);
+                transform: scale(1.04);
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="profile-main">
+        <form class="profile-form" style="display:flex;flex-direction:column;align-items:center;" action="{% url 'profile' %}"
+              method="post">
+            {% csrf_token %}
+            <div class="profile-leaves">
+
+                <div class="profile-leaf left"><span class="profile-label">نام:</span> <input type="text"
+                                                                                              value="{{ user.first_name }}"
+                                                                                              class="profile-input-editable"
+                                                                                              name="first_name"/></div>
+                <div class="profile-leaf right"><span class="profile-label">نام خانوادگی:</span> <input type="text"
+                                                                                                        value="{{ user.last_name }}"
+                                                                                                        class="profile-input-editable"
+                                                                                                        name="last_name"/>
+                </div>
+                <div class="profile-leaf left"><span class="profile-label">نام کاربری:</span> <input type="text"
+                                                                                                     value="{{ user.username }}"
+                                                                                                     class="profile-input-editable"
+                                                                                                     name="username"/>
+                </div>
+                <div class="profile-leaf right"><span class="profile-label">ایمیل:</span> <input type="text"
+                                                                                                 value="{{ user.email }}"
+                                                                                                 class="profile-input-editable"
+                                                                                                 name="email"/></div>
+            </div>
+
+            <button type="submit" class="profile-save-btn">ثبت تغییرات اصلی</button>
+            <div style="width:180px;margin:0 auto 32px auto;display:flex;flex-direction:column;align-items:center;gap:12px;">
+
+            </div>
+
+        </form>
+        <form action="{% url 'more_user' %}" method="post">
+        
+            {% csrf_token %}
+        <center>
+                    <div class="profile-circle-large"
+                 style="position:relative; margin-bottom: 50px; display:flex; justify-content:center; align-items:center;">
+                <label for="profileUpload"
+                       style="position:absolute;top:0;left:0;width:100%;height:100%;cursor:pointer;z-index:2;">
+                    
+                    <img id="profileImage" src="" alt="پروفایل کاربر"
+                         style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"/>
+                    <input type="file" id="profileUpload" accept="image/*" style="display:none;" name="image"/>
+                </label>
+            </div>
+        </center>
+            <input type="text" value="{{ user.username }}" name="username" hidden="hidden">
+            <input type="number" value="{{ user.id }}" hidden="hidden" name="id">
+            <div class="profile-leaves profile-leaves-bottom">
+                <div class="profile-leaf left"><span class="profile-label">شماره موبایل:</span> <input type="number"
+                                                                                                       value=""
+                                                                                                       class="profile-input-editable"
+                                                                                                       name="mobile"/>
+                </div>
+                
+                
+                
+                
+                {% for Address in Address %}
+                	{% if Address.user_id == user.id %}
+                		                
+                <div class="profile-leaf right"><span class="profile-label">شهر:</span> <input type="text" value="{{ Address.city }}"
+                                                                                               class="profile-input-editable"
+                                                                                               name="city" readonly/></div>
+                <div class="profile-leaf left"><span class="profile-label">محل سکونت:</span> <input type="text"
+                                                                                                    value="{{ Address.district }}"
+                                                                                                    class="profile-input-editable"
+                                                                                                    name="city2" readonly/></div>
+                	{% endif %} 
+           
+                    {% empty %}
+                                <div class="profile-leaf right"><span class="profile-label">شهر:</span> <input type="text" value=""
+                                                                                               class="profile-input-editable"
+                                                                                               name="city" readonly/></div>
+                <div class="profile-leaf left"><span class="profile-label">محل سکونت:</span> <input type="text"
+                                                                                                    value="{{ Address.district }}"
+                                                                                                    class="profile-input-editable"
+                                                                                                    name="" readonly/></div>
+                     {% endfor %}
+                
+                
+                
+                <div class="profile-leaf right"><span class="profile-label">تاریخ عضویت:</span> <input type="text"
+                                                                                                       value="{{ user.date_joined }}"
+                                                                                                       class="profile-input-editable"
+                                                                                                       name="years" readonly/>
+                </div>
+            </div>
+            <button type="button" id="removeProfileImageBtn" class="profile-remove-btn" onclick="removeProfileImage()">
+                حذف عکس
+            </button>
+            <button type="submit" class="profile-save-btn">ثبت تغییرات جزئی</button>
+        </form>
+    </div>
+
+
+    <script>
+        function changeProfileImage(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                    document.getElementById('removeProfileImageBtn').style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeProfileImage() {
+            document.getElementById('profileImage').src = 'assets/img/img_avatar.png';
+            document.getElementById('profileUpload').value = '';
+            document.getElementById('removeProfileImageBtn').style.display = 'none';
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('removeProfileImageBtn').style.display = 'none';
+            document.getElementById('profileUpload').addEventListener('change', changeProfileImage);
+        });
+    </script>
+    </body>
+{% endblock content %}
+</html>

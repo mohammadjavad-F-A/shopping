@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+<head>
+  <meta cha rset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود</title>
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+</head>
+<body>
+
+
+
+  <!-- فرم ورود -->
+  <div class="login-container">
+    <form class="login-form" action="{% url 'signin' %}" method="post">
+        {% csrf_token %}
+      <h2>ورود</h2>
+      <input type="text" placeholder="نام کاربری" name="username" required>
+      <input type="password" placeholder="رمز عبور" name="password" required>
+      <button type="submit">ورود</button>
+      <div class="login-links">
+        <span>ثبت نام نکرده‌اید؟ <a href="{% url 'login' %}">ثبت نام کنید</a></span>
+        <span style="margin-right:16px;"><a href="{% url 'forgot' %}">فراموشی رمز عبور</a></span>
+      </div>
+    </form>
+  </div>
+
+
+</body>
+{% endblock content %}
+</html>

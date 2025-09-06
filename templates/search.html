@@ -1,0 +1,104 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جست‌وجوی محصولات</title>
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+  <style>
+    body { font-family: 'Vazir', sans-serif; background: #f7f8fa; margin: 0; padding: 0; }
+    .search-bar-wrap { width:100%; display:flex; justify-content:center; margin-top:100px; margin-bottom:50px; }
+    .search-bar-form { display:flex; align-items:center; max-width:480px; width:100%; background:#fff; border-radius:18px; box-shadow:0 2px 12px rgba(0,153,204,0.08); padding:8px 16px; }
+    .search-bar-input { flex:1; border:none; font-size:1.1rem; padding:8px 12px; border-radius:12px; outline:none; background:transparent; }
+    .search-bar-btn { background:linear-gradient(90deg,#0099cc,#00e6d0); color:#fff; border:none; border-radius:10px; padding:8px 20px; font-size:1rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-right:8px; }
+    .products-list { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; justify-items:center; margin-top:32px; }
+    .product-card { background:#fff; border-radius:20px; box-shadow:0 2px 12px rgba(0,0,0,0.09); width:320px; padding:28px 18px 22px 18px; text-align:center; transition:box-shadow 0.2s, transform 0.2s; display:flex; flex-direction:column; align-items:center; gap:16px; position:relative; }
+    .product-card:hover { box-shadow:0 8px 32px rgba(0,153,204,0.13); transform:translateY(-6px) scale(1.03); }
+    .product-card-img { width:100%; aspect-ratio:1.6/1; object-fit:cover; border-radius:14px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07); }
+    .product-card-title { font-size:1.15rem; margin-bottom:6px; color:#222; font-weight:500; }
+    .product-card-stars { color:#FFD600; font-size:1.1rem; margin-bottom:6px; }
+    .product-card-desc { font-size:1rem; color:#444; margin-bottom:10px; }
+    .product-card-prices { display:flex; gap:8px; justify-content:center; align-items:center; margin-bottom:8px; }
+    .product-card-price-old { text-decoration:line-through; color:#bdbdbd; font-size:0.98rem; }
+    .product-card-price-new { color:#0099cc; font-size:1.05rem; font-weight:bold; }
+    .add-to-cart-btn { background:linear-gradient(90deg,#0099cc,#00e6d0); color:#fff; border:none; border-radius:10px; padding:10px 28px; font-size:1rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.08); transition:background 0.2s; margin-top:8px; }
+    .add-to-cart-btn:hover { background:linear-gradient(90deg,#00e6d0,#0099cc); }
+    @media (max-width:900px) { .product-card { width:98vw; max-width:340px; } .products-list { gap:16px; } }
+  </style>
+</head>
+<body>
+
+  <div class="search-bar-wrap">
+    <form class="search-bar-form" action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+      <input type="text" class="search-bar-input"  placeholder="جست‌وجوی محصول، دسته‌بندی یا برند..." name="searched">
+      <button type="submit" class="search-bar-btn">جست‌وجو</button>
+    </form>
+  </div>
+  <div class="products-list" id="searchResults" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;justify-items:center;margin-top:32px;">
+      {% for product in products %}
+      	<div class="product-card">
+      <img class="product-card-img" src="{{ product.image_main.url }}" alt="محصول ۱">
+      <div class="product-card-info">
+        <h3 class="product-card-title">{{ product.name }}</h3>
+        <div class="product-card-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span></div>
+        <p class="product-card-desc">{{ product.description }}</p>
+        <div class="product-card-prices">
+            {% if product.is_old %}
+            	          <span class="product-card-price-old">{{ product.old_price | intcomma}}</span>
+          <span class="product-card-price-new">{{ product.price | intcomma}}</span>
+                {% else %}
+                 <span class="product-card-price-new">{{ product.price | intcomma}}</span>
+            {% endif %} 
+
+         
+        </div>
+        <a class="add-to-cart-btn" href="{% url 'products' product.id %}">رفتن به صفحه محصول</a>
+      </div>
+    </div>
+      {% endfor %}
+      
+    
+  </div>
+
+  <script>
+const products = [
+  {img:'assets/img/img_avatar.png', title:'هدفون بی‌سیم', stars:4, desc:'هدفون بی‌سیم با کیفیت عالی و صدای شفاف، مناسب برای ورزش و سفر.', old:'۸۵۰,۰۰۰ تومان', price:'۶۹۰,۰۰۰ تومان'},
+  {img:'assets/img/img_avatar.png', title:'ساعت هوشمند', stars:5, desc:'ساعت هوشمند با امکانات کامل و طراحی مدرن، مناسب برای همه سنین.', old:'۲,۵۰۰,۰۰۰ تومان', price:'۲,۲۹۰,۰۰۰ تومان'},
+  {img:'assets/img/img_avatar.png', title:'کتاب روانشناسی', stars:4, desc:'کتاب روانشناسی با محتوای کاربردی برای رشد فردی و موفقیت.', old:'۱۲۰,۰۰۰ تومان', price:'۹۵,۰۰۰ تومان'},
+];
+function searchProducts(e) {
+  e.preventDefault();
+  const q = document.getElementById('searchInput').value.trim();
+  const results = products.filter(p => p.title.includes(q) || p.desc.includes(q));
+  const container = document.getElementById('searchResults');
+  if(results.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:#d32f2f;font-size:1.1rem;margin-top:32px;">محصولی یافت نشد.</div>';
+    return;
+  }
+  container.innerHTML = results.map(p => `
+    <div class="product-card">
+      <img class="product-card-img" src="${p.img}" alt="${p.title}">
+      <div class="product-card-info">
+        <h3 class="product-card-title">${p.title}</h3>
+        <div class="product-card-stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div>
+        <p class="product-card-desc">${p.desc}</p>
+        <div class="product-card-prices">
+          <span class="product-card-price-old">${p.old}</span>
+          <span class="product-card-price-new">${p.price}</span>
+        </div>
+        <button class="add-to-cart-btn">افزودن به سبد خرید</button>
+      </div>
+    </div>
+  `).join('');
+}
+  </script>
+</body>
+{% endblock content %}
+</html>

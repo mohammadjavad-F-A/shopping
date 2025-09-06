@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b0992d73-e8b5-4974-b155-436f29a20423" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="3259vsmI3a6YBvCQrteaNFZMkpz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.SHOPPING2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/SHOPPING2/SHOPPING2/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SHOPPING2\SHOPPING2\templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="SHOPPING2" type="Python.DjangoServer" factoryName="Django server">
+      <module name="SHOPPING2" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="SHOPPING2.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.18034.82" />
+        <option value="bundled-python-sdk-975db3bf15a3-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.18034.82" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b0992d73-e8b5-4974-b155-436f29a20423" name="Changes" comment="" />
+      <created>1756699800231</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1756699800231</updated>
+      <workItem from="1756699801271" duration="2991000" />
+      <workItem from="1756703020493" duration="73000" />
+      <workItem from="1756703109328" duration="252000" />
+      <workItem from="1756703402854" duration="15000" />
+      <workItem from="1756703440862" duration="2423000" />
+      <workItem from="1756705898262" duration="78000" />
+      <workItem from="1756706048260" duration="823000" />
+      <workItem from="1756706933427" duration="120000" />
+      <workItem from="1756707148306" duration="31000" />
+      <workItem from="1756707253226" duration="139000" />
+      <workItem from="1756707514307" duration="1366000" />
+      <workItem from="1756716398925" duration="1056000" />
+      <workItem from="1756717469800" duration="3894000" />
+      <workItem from="1756731801370" duration="13000" />
+      <workItem from="1756735333634" duration="1456000" />
+      <workItem from="1756790484741" duration="6243000" />
+      <workItem from="1756797433669" duration="159000" />
+      <workItem from="1756809880104" duration="776000" />
+      <workItem from="1756810702050" duration="29000" />
+      <workItem from="1756810775478" duration="104000" />
+      <workItem from="1756810894752" duration="19000" />
+      <workItem from="1756810927451" duration="937000" />
+      <workItem from="1756811936678" duration="1262000" />
+      <workItem from="1756823137609" duration="123000" />
+      <workItem from="1756823323381" duration="22000" />
+      <workItem from="1756823355397" duration="2297000" />
+      <workItem from="1756833418054" duration="106000" />
+      <workItem from="1756833559650" duration="418000" />
+      <workItem from="1756834012053" duration="86000" />
+      <workItem from="1756834108036" duration="3601000" />
+      <workItem from="1756887433091" duration="322000" />
+      <workItem from="1756889330231" duration="367000" />
+      <workItem from="1756896687809" duration="317000" />
+      <workItem from="1756921807246" duration="2256000" />
+      <workItem from="1756967293228" duration="3349000" />
+      <workItem from="1756976872161" duration="4000" />
+      <workItem from="1757009108179" duration="1900000" />
+      <workItem from="1757048810009" duration="853000" />
+      <workItem from="1757049689524" duration="6019000" />
+      <workItem from="1757063550884" duration="11363000" />
+      <workItem from="1757093063956" duration="234000" />
+      <workItem from="1757094345409" duration="171000" />
+      <workItem from="1757140933193" duration="12000" />
+      <workItem from="1757142387631" duration="1781000" />
+      <workItem from="1757152862088" duration="1696000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

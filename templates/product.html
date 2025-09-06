@@ -1,0 +1,616 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>جزئیات محصول</title>
+        <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+        <style>
+            body {
+                background: #f7f8fa;
+
+                margin: 0;
+                padding: 0;
+            }
+
+            .product-main-img {
+                width: 80vw;
+                max-width: 900px;
+                height: 340px;
+                object-fit: cover;
+                border-radius: 32px;
+                margin: 32px auto 16px auto;
+                display: block;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            }
+
+            .product-gallery-row {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                margin-bottom: 32px;
+            }
+
+            .product-gallery-img {
+                width: 120px;
+                height: 90px;
+                object-fit: cover;
+                border-radius: 16px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+
+            .product-gallery-img:hover {
+                transform: scale(1.08);
+            }
+
+            .product-details-flex {
+                display: flex;
+                justify-content: center;
+                gap: 32px;
+                margin-bottom: 32px;
+            }
+
+            .product-comment-box {
+                min-width: 220px;
+                max-width: 260px;
+                background: #fff;
+                border-radius: 32px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+                padding: 24px 16px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 320px;
+            }
+
+            .product-comment-list {
+                min-width: 220px;
+                max-width: 260px;
+                background: #fff;
+                border-radius: 32px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+                padding: 24px 16px;
+                height: 320px;
+                overflow-y: auto;
+            }
+
+            .product-comment-list h3 {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+                color: #0099cc;
+            }
+
+            .product-comment {
+                background: #f2f6fa;
+                border-radius: 12px;
+                padding: 8px 12px;
+                margin-bottom: 8px;
+                font-size: 0.95rem;
+            }
+
+            .product-comment-box textarea {
+                width: 100%;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                padding: 8px;
+                font-size: 1rem;
+                margin-bottom: 12px;
+                resize: vertical;
+            }
+
+            .product-comment-box button {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 12px;
+                padding: 8px 24px;
+                font-size: 1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: background 0.2s;
+            }
+
+            .product-comment-box button:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            .product-features-row {
+                display: flex;
+                justify-content: center;
+                gap: 32px;
+                margin-bottom: 32px;
+                align-items: flex-start;
+            }
+
+            .product-features-box {
+                background: #fff;
+                border-radius: 24px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+                padding: 24px 16px;
+                min-width: 340px;
+                max-width: 420px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .feature-item {
+                background: #f2f6fa;
+                border-radius: 12px;
+                padding: 8px 16px;
+                font-size: 0.98rem;
+                margin-bottom: 8px;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .product-availability {
+                background: #fff;
+                border-radius: 24px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+                padding: 24px 16px;
+                min-width: 180px;
+                max-width: 220px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .availability-status {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .availability-status .tick {
+                color: #00c853;
+                font-size: 1.5rem;
+            }
+
+            .availability-status .cross {
+                color: #d32f2f;
+                font-size: 1.5rem;
+            }
+
+            .add-to-cart-btn {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 16px;
+                padding: 12px 32px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                margin-top: 12px;
+                transition: background 0.2s;
+            }
+
+            .add-to-cart-btn:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            .similar-products-section {
+                margin: 56px auto 32px auto;
+                max-width: 1200px;
+                background: linear-gradient(90deg, #f7f8fa 60%, #e0f7fa 100%);
+                border-radius: 32px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+                padding: 32px 0 24px 0;
+            }
+
+            .similar-products-title {
+                font-size: 1.4rem;
+                color: #0099cc;
+                margin-bottom: 24px;
+                text-align: center;
+                font-weight: bold;
+                letter-spacing: 1px;
+            }
+
+            .similar-products-row {
+                display: flex;
+                gap: 40px;
+                justify-content: center;
+                flex-wrap: nowrap;
+                margin-bottom: 8px;
+            }
+
+            .similar-product-card {
+                background: #fff;
+                border-radius: 20px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+                width: 300px;
+                padding: 28px 18px 22px 18px;
+                text-align: center;
+                transition: box-shadow 0.2s, transform 0.2s;
+                margin: 0 8px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+                position: relative;
+            }
+
+            .similar-product-card:hover {
+                box-shadow: 0 8px 32px rgba(0, 153, 204, 0.13);
+                transform: translateY(-6px) scale(1.03);
+            }
+
+            .similar-product-card img {
+                width: 100%;
+                aspect-ratio: 2.5 / 1;
+                object-fit: cover;
+                border-radius: 14px;
+                margin-bottom: 10px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            }
+
+            .similar-product-card .title {
+                font-size: 1.15rem;
+                margin-bottom: 6px;
+                color: #222;
+                font-weight: 500;
+            }
+
+            .similar-product-card .price {
+                font-size: 1.05rem;
+                color: #0099cc;
+                margin-bottom: 10px;
+                font-weight: bold;
+            }
+
+            .similar-product-card .goto-btn {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                padding: 10px 28px;
+                font-size: 1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: background 0.2s;
+                margin-top: 8px;
+            }
+
+            .similar-product-card .goto-btn:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            @media (max-width: 1100px) {
+                .similar-products-row {
+                    gap: 24px;
+                }
+
+                .similar-product-card {
+                    width: 220px;
+                    padding: 18px 8px 14px 8px;
+                }
+            }
+
+            @media (max-width: 800px) {
+                .similar-products-section {
+                    padding: 18px 0 10px 0;
+                }
+
+                .similar-products-row {
+                    gap: 12px;
+                }
+
+                .similar-product-card {
+                    width: 98vw;
+                    max-width: 340px;
+                }
+            }
+
+            @media (max-width: 900px) {
+                .product-main-img {
+                    width: 98vw;
+                    height: 220px;
+                }
+
+                .product-features-box {
+                    min-width: 220px;
+                }
+
+                .product-details-flex, .product-features-row {
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 20px;
+                }
+
+                .product-comment-box, .product-comment-list, .product-availability {
+                    min-width: 90vw;
+                    max-width: 98vw;
+                }
+            }
+
+            .paginator {
+                margin-top: 20px;
+            }
+
+            .page-btn {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 8px;
+                padding: 6px 18px;
+                font-size: 1.1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: background 0.2s;
+            }
+
+            .page-btn:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            #page-indicator {
+                min-width: 32px;
+                text-align: center;
+                color: #0099cc;
+            }
+        </style>
+    </head>
+    <body>
+
+    <header>
+        <!-- ...existing navbar code... -->
+    </header>
+    <main style="margin-top:80px;">
+        <div style="display:flex;justify-content:center;align-items:flex-start;gap:32px;margin-top:32px;padding:0 48px;">
+            <form action="{% url 'comments' %}" method="post">
+                {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                    <div class="product-comment-box" style="min-width:260px;max-width:260px;">
+                        <h3>ثبت نظر شما</h3>
+
+                        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;">
+                            <span style="font-size:1rem;">امتیاز شما:</span>
+                            <input type="number" placeholder="امتیاز شما" style="border-radius: 5px; border-width: 1px"
+                                   max="5" min="1" name="star">
+                            {#          <div class="star-rating" style="display:flex;gap:4px;">#}
+                            {#            <span class="star" onclick="setRating(1)">&#9733;</span>#}
+                            {#            <span class="star" onclick="setRating(2)">&#9733;</span>#}
+                            {#            <span class="star" onclick="setRating(3)">&#9733;</span>#}
+                            {#            <span class="star" onclick="setRating(4)">&#9733;</span>#}
+                            {#            <span class="star" onclick="setRating(5)">&#9733;</span>#}
+                            {#          </div>#}
+                        </div>
+                        <input type="text" value="{{ user.username }}" hidden="hidden" name="username">
+                        <input type="number" value="{{ products.id }}" hidden="hidden" name="id">
+                        <textarea rows="4" placeholder="نظر خود را بنویسید..." name="text"></textarea>
+                        <button type="submit">ارسال نظر</button>
+                    </div>
+                {% endif %}
+            </form>
+            <img src="{{ products.image_main.url }}" alt="عکس اصلی محصول" class="product-main-img"/>
+            <div class="product-comment-list" style="min-width:260px;max-width:260px;">
+                <h3>نظرات کاربران</h3>
+                {% for comment in comments %}
+                    <div class="product-comment">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                            <span style="font-weight:500;">{{ comment.user_name }}</span>
+
+
+                            {% with ''|center:comment.star as range %}
+                                {% for _ in range %}
+                                    <span style="color:#FFD700;font-size:1.1rem;">&#9733;</span>
+                                {% endfor %}
+                            {% endwith %}
+
+                        </div>
+
+
+                        {{ comment.content }}
+                    {% if request.user.is_authenticated %}
+                        {% if comment.user_name == user.username %}
+                    <a href="{% url 'delete' products.id comment.id%}" class="delete-comment-btn" style="margin-top:6px;background:#ff5252;color:#fff;border:none;border-radius:8px;padding:4px 14px;font-size:0.95rem;cursor:pointer;">حذف</a>
+                    {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+
+                <button class="show-more-comments-btn"
+                        style="margin-top:12px;width:100%;background:linear-gradient(90deg,#0099cc,#00e6d0);color:#fff;border:none;border-radius:10px;padding:8px 0;font-size:1rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:background 0.2s;">
+                    مشاهده کامنت‌های بیشتر
+                </button>
+            </div>
+        </div>
+
+        <div class="product-gallery-row">
+            <img src="{{ products.image_1.url }}" class="product-gallery-img" alt="عکس محصول 1"
+                 onclick="openProductImage(this.src)">
+            <img src="{{ products.image_2.url }}" class="product-gallery-img" alt="عکس محصول 2"
+                 onclick="openProductImage(this.src)">
+            <img src="{{ products.image_3.url }}" class="product-gallery-img" alt="عکس محصول 3"
+                 onclick="openProductImage(this.src)">
+            <img src="{{ products.image_4.url }}" class="product-gallery-img" alt="عکس محصول 4"
+                 onclick="openProductImage(this.src)">
+            <img src="{{ products.image_5.url }}" class="product-gallery-img" alt="عکس محصول 5"
+                 onclick="openProductImage(this.src)">
+
+        </div>
+        <div id="imageModal"
+             style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;">
+            <span onclick="closeProductImage()"
+                  style="position:absolute;top:32px;right:48px;font-size:2.2rem;color:#fff;cursor:pointer;z-index:10001;">&times;</span>
+            <img id="modalProductImg" src=""
+                 style="max-width:80vw;max-height:80vh;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+        </div>
+        <div style="display:flex;justify-content:center;align-items:flex-start;gap:32px;margin:32px 0;">
+            <div class="product-features-box">
+                <div class="feature-item">{{ products.property_1 }}</div>
+                <div class="feature-item">{{ products.property_2 }}</div>
+                <div class="feature-item">{{ products.property_3 }}</div>
+                <div class="feature-item">{{ products.property_4 }}</div>
+                <div class="feature-item">{{ products.property_5 }}</div>
+            </div>
+            <div class="product-info-main"
+                 style="max-width:340px;margin:0;padding:24px 18px 18px 18px;background:#fff;border-radius:24px;box-shadow:0 2px 12px rgba(0,153,204,0.08);display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+                <h1 class="product-title"
+                    style="font-size:1.25rem;color:#0099cc;font-weight:700;margin-bottom:8px;">{{ products.name }}</h1>
+                <p class="product-desc"
+                   style="font-size:1.01rem;color:#444;margin-bottom:8px;line-height:1.7;">{{ products.description }}</p>
+                <div class="product-price-wrap" style="display:flex;align-items:center;gap:12px;">
+                    {% if products.is_old %}
+                        <span class="product-price-old"
+                              style="font-size:1.05rem;color:#d32f2f;text-decoration:line-through;font-weight:500;">{{ products.old_price | intcomma }}</span>
+                        <span class="product-price-new"
+                              style="font-size:1.15rem;color:#0099cc;font-weight:700;background:#e0f7fa;padding:4px 18px;border-radius:12px;">{{ products.price | intcomma }}</span>
+                    {% else %}
+                        <span class="product-price-new"
+                              style="font-size:1.15rem;color:#0099cc;font-weight:700;background:#e0f7fa;padding:4px 18px;border-radius:12px;">{{ products.price | intcomma }}</span>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="product-availability">
+                {% if products.mojod %}
+                    <div class="availability-status"><span class="tick">✔</span> موجود</div>
+                {% else %}
+                    <div class="availability-status"><span class="cross">✖</span> ناموجود</div>
+                {% endif %}
+
+
+                <div class="product-quantity-select"
+                     style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <label for="productQty" style="font-size:1.05rem;color:#0099cc;font-weight:500;">تعداد:</label>
+                    <input type="number" id="productQty" min="1" value="1"
+                           style="width:60px;padding:6px 10px;border-radius:10px;border:1px solid #e0e0e0;font-size:1.05rem;text-align:center;box-shadow:0 2px 8px rgba(0,153,204,0.08);outline:none;" name="quantity">
+                </div>
+                {% if products.mojod %}
+                    <a class="add-to-cart-btn" href="{% url 'add_to_cart' products.id%}">افزودن به سبد خرید</a>
+                {% else %}
+                    <a class="add-to-cart-btn" id="addToCartBtn" href="">افزودن به سبد خرید</a>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <section class="similar-products-section">
+            <div class="similar-products-title">محصولات مشابه</div>
+{% for similar_product in similar_products %}
+	      <div class="similar-products-row">
+        <!-- باکس‌های محصولات مشابه (استایل و ساختار مشابه index.html) -->
+        <div class="product-card">
+          <img class="product-card-img" src="{{ similar_product.image_main.url }}" alt="محصول مشابه ۱">
+          <div class="product-card-info">
+            <h3 class="product-card-title">{{ similar_product.name }}</h3>
+            <div class="product-card-stars">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+            </div>
+            <p class="product-card-desc">{{ similar_product.description }}</p>
+            <div class="product-card-prices">
+                {% if similar_product.is_old %}
+                	              <span class="product-card-price-old">{{ similar_product.old_price |intcomma}} </span>
+              <span class="product-card-price-new">{{ similar_product.price |intcomma}}</span>
+                    {% else %}
+                    <span class="product-card-price-new">{{ similar_product.price |intcomma}}</span>
+                {% endif %} 
+
+            </div>
+            <button class="add-to-cart-btn">افزودن به سبد خرید</button>
+          </div>
+        </div>
+        <!-- ...محصولات بیشتر را با حلقه Django اضافه کنید... -->
+      </div>
+{% endfor %}
+
+
+      <div class="paginator" style="display:flex;justify-content:center;gap:12px;margin-top:28px;">
+        <!-- دکمه‌های صفحه‌بندی را با Django رندر کنید -->
+      </div>
+        </section>
+    </main>
+
+    <script>
+        let selectedRating = 0;
+
+        function setRating(rating) {
+            selectedRating = rating;
+            const stars = document.querySelectorAll('.star-rating .star');
+            stars.forEach((star, i) => {
+                star.style.color = i < rating ? '#FFD700' : '#ccc';
+            });
+        }
+
+        const similarProducts = [
+            {img: 'assets/img/Presentation1.png', title: 'تی‌شرت آبی', price: '320,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'شلوار جین', price: '540,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'کفش اسپرت', price: '780,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'کلاه ورزشی', price: '120,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'ساعت هوشمند', price: '2,100,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'کیف دستی', price: '450,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'عینک آفتابی', price: '390,000 تومان', link: 'product.html'},
+            {img: 'assets/img/Presentation1.png', title: 'جوراب نخی', price: '60,000 تومان', link: 'product.html'}
+        ];
+        let currentPage = 1;
+        const perPage = 2;
+
+        function renderSimilarProducts() {
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            const products = similarProducts.slice(start, end);
+            const row = document.getElementById('similar-products-row');
+            row.innerHTML = products.map(p => `
+    <div class="similar-product-card">
+      <img src="${p.img}" alt="${p.title}" />
+      <div class="title">${p.title}</div>
+      <div class="price">${p.price}</div>
+      <button class="goto-btn" onclick="location.href='${p.link}'">مشاهده محصول</button>
+    </div>
+  `).join('');
+            document.getElementById('page-indicator').textContent = currentPage;
+        }
+
+        function changePage(dir) {
+            const maxPage = Math.ceil(similarProducts.length / perPage);
+            currentPage += dir;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > maxPage) currentPage = maxPage;
+            renderSimilarProducts();
+        }
+
+        document.addEventListener('DOMContentLoaded', renderSimilarProducts);
+
+        function openProductImage(src) {
+            document.getElementById('modalProductImg').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeProductImage() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function updateAddToCartButton() {
+            var available = document.querySelector('.availability-status .tick');
+            var unavailable = document.querySelector('.availability-status .cross');
+            var btn = document.getElementById('addToCartBtn');
+            if (unavailable && unavailable.parentElement.style.display !== 'none') {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateAddToCartButton);
+        // اگر وضعیت موجود/ناموجود داینامیک شد، این تابع را دوباره صدا بزنید
+    </script>
+    </body>
+    </html>
+{% endblock content %}

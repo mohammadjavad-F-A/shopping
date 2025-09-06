@@ -1,0 +1,77 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تکمیل خرید</title>
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+  <style>
+    body { font-family: 'Vazir', sans-serif; background: #f7f8fa; margin: 0; padding: 0; }
+    .checkout-section { max-width: 900px; margin: 120px auto 32px auto; background: #fff; border-radius: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); padding: 48px 32px; }
+    .checkout-title { font-size: 1.6rem; color: #0099cc; margin-bottom: 32px; font-weight: bold; text-align: center; }
+    .cart-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+    .cart-item { background: #f8fcff; border-radius: 20px; box-shadow: 0 2px 12px rgba(0,153,204,0.08); padding: 24px 18px; display: flex; align-items: center; gap: 24px; }
+    .cart-item img { width: 80px; height: 80px; border-radius: 16px; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .cart-info { flex: 1; }
+    .cart-title-item { font-size: 1.15rem; color: #0099cc; font-weight: 500; margin-bottom: 6px; }
+    .cart-price { font-size: 1.05rem; color: #0099cc; font-weight: bold; margin-bottom: 8px; }
+    .cart-quantity { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .address-form { background: #f8fcff; border-radius: 18px; box-shadow: 0 2px 12px rgba(0,153,204,0.08); padding: 24px 18px; max-width: 420px; margin: 0 auto 32px auto; display: flex; flex-direction: column; gap: 16px; }
+    .address-form label { font-size: 1.05rem; color: #444; margin-bottom: 6px; }
+    .address-form input, .address-form textarea { font-family: inherit; font-size: 1rem; border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px; outline: none; }
+    .address-form textarea { resize: vertical; min-height: 60px; }
+    .checkout-btn { background: linear-gradient(90deg,#0099cc,#00e6d0); color: #fff; border: none; border-radius: 10px; padding: 12px 32px; font-size: 1.1rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s; margin-top: 18px; }
+    .checkout-btn:hover { background: linear-gradient(90deg,#00e6d0,#0099cc); }
+    @media (max-width: 900px) { .checkout-section { padding: 24px 8px; } .cart-item { flex-direction: column; align-items: flex-start; gap: 12px; } }
+  </style>
+</head>
+<body>
+
+  <div class="checkout-section">
+    <div class="checkout-title">لیست سبد خرید شما</div>
+    <div class="cart-list">
+     {% for item in cart_items %}
+     	 <div class="cart-item">
+        <img src="{{ item.product.image_main.url }}" alt="محصول">
+        <div class="cart-info">
+          <div class="cart-title-item">{{ item.product.name }}</div>
+          <div class="cart-price">{{ item.product.price |intcomma}}</div>
+          <div class="cart-quantity">تعداد: {{ item.quantity }}</div>
+        </div>
+      </div>
+     {% endfor %}
+     
+
+    </div>
+    <form class="address-form" style="background:#f8fcff;border-radius:18px;box-shadow:0 2px 12px rgba(0,153,204,0.08);padding:24px 18px;max-width:420px;margin:0 auto 32px auto;display:flex;flex-direction:column;gap:16px;" action="{% url 'checkout' %}" method="post">
+        {% csrf_token %}
+      <label for="address">آدرس کامل</label>
+      <textarea id="address" name="address" placeholder="آدرس کامل خود را وارد کنید" required></textarea>
+      <label for="city">شهر</label>
+      <input type="text" id="city" name="city" placeholder="مثال: تهران" required>
+      <label for="district">محله</label>
+      <input type="text" id="district" name="district" placeholder="مثال: تهرانپارس" required>
+      <label for="street">خیابان</label>
+      <input type="text" id="street" name="street" placeholder="مثال: آزادی" required>
+      <label for="alley">کوچه</label>
+      <input type="text" id="alley" name="alley" placeholder="مثال: کوچه گلستان">
+      <label for="plaque">پلاک</label>
+      <input type="number" id="plaque" name="plaque" placeholder="مثال: ۱۲۳" required>
+      <label for="floor">طبقه</label>
+      <input type="number" id="floor" name="floor" placeholder="مثال: ۲">
+      <label for="unit">واحد</label>
+      <input type="number" id="unit" name="unit" placeholder="مثال: ۵">
+      <label for="postal">کد پستی</label>
+      <input type="number" id="postal" name="postal" placeholder="مثال: 1234567890" required>
+      <button type="submit" class="checkout-btn">ادامه خرید</button>
+    </form>
+  </div>
+
+</body>
+{% endblock content %}
+</html>

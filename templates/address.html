@@ -1,0 +1,148 @@
+{% extends 'master.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ثبت محل سکونت</title>
+        <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+        <style>
+            body {
+                font-family: 'Vazir', sans-serif;
+                background: #f7f8fa;
+                margin: 0;
+                padding: 0;
+            }
+
+            .address-section {
+                max-width: 520px;
+                margin: 120px auto 32px auto;
+                background: #fff;
+                border-radius: 32px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+                padding: 48px 32px;
+            }
+
+            .address-title {
+                font-size: 1.6rem;
+                color: #0099cc;
+                margin-bottom: 24px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .address-form {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .address-form label {
+                font-size: 1.05rem;
+                color: #444;
+                margin-bottom: 6px;
+            }
+
+            .address-form input, .address-form textarea {
+                font-family: inherit;
+                font-size: 1rem;
+                border: 1px solid #e0e0e0;
+                border-radius: 10px;
+                padding: 10px;
+                outline: none;
+            }
+
+            .address-form textarea {
+                resize: vertical;
+                min-height: 60px;
+            }
+
+            .address-form button {
+                background: linear-gradient(90deg, #0099cc, #00e6d0);
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                padding: 10px 28px;
+                font-size: 1rem;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: background 0.2s;
+                margin-top: 12px;
+            }
+
+            .address-form button:hover {
+                background: linear-gradient(90deg, #00e6d0, #0099cc);
+            }
+
+            @media (max-width: 600px) {
+                .address-section {
+                    padding: 24px 8px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="address-section">
+
+        <div class="address-title">ثبت محل سکونت</div>
+
+
+
+
+            {% if request.user.is_authenticated %}
+
+                {% for Address in Address %}
+                	
+                    {% if Address.user_id == user.id %}
+                        <h1>شما یک بار جهت ثبت اطلاعات محل سکونت اقدام کرده اید </h1><br>
+                        <a href="{% url 'change_address' Address.id %}">جهت تغییر اطلاعات کلیک کنید</a>
+                    
+                    {% endif %}
+
+          {% empty %}        
+                             <form class="address-form" action="{% url 'address' %}" method="post">
+            {% csrf_token %}
+                            <input type="text" name="username" value="{{ user.username }}" hidden="hidden" required>
+
+                            <input type="number" name="userid" value="{{ user.id }}" hidden="hidden" required>
+
+
+                            <label for="city">شهر</label>
+                            <input type="text" id="city" name="city" placeholder="مثال: تهران" required>
+                            <label for="district">محله</label>
+                            <input type="text" id="district" name="district" placeholder="مثال: تهرانپارس"
+                                   value="{{ Address.district }}" required>
+                            <label for="street">خیابان</label>
+                            <input type="text" id="street" name="street" placeholder="مثال: آزادی" required>
+                            <label for="alley">کوچه</label>
+                            <input type="text" id="alley" name="alley" placeholder="مثال: کوچه گلستان" required>
+                            <label for="plaque">پلاک</label>
+                            <input type="number" id="plaque" name="plaque" placeholder="مثال: ۱۲۳" required>
+                            <label for="floor">طبقه</label>
+                            <input type="number" id="floor" name="floor" placeholder="مثال: ۲" required>
+                            <label for="unit">واحد</label>
+                            <input type="number" id="unit" name="unit" placeholder="مثال: ۵" required>
+                            <label for="postal">کد پستی</label>
+                            <input type="number" id="postal" name="postal" placeholder="مثال: 1234567890" required>
+                            <button type="submit">ثبت اطلاعات</button>
+                        </form>
+                {% endfor %}
+                
+            {% endif %}
+
+
+        </form>
+
+
+    </div>
+
+
+    </body>
+{% endblock content %}
+</html>

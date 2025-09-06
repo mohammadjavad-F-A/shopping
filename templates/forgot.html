@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+{% block content %}
+	
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فراموشی رمز عبور</title>
+  <link href="https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static "assets/css/style-pink-navbar.css" %}">
+</head>
+<body>
+
+
+  <!-- فرم فراموشی رمز عبور -->
+  <div class="forgot-container">
+    <form class="forgot-form" method="post" action="{% url 'forgot' %}">
+        {% csrf_token %}
+      <h2>فراموشی رمز عبور</h2>
+      <input type="email" placeholder="ایمیل خود را وارد کنید" name="email" required>
+      <button type="submit">ارسال لینک بازیابی</button>
+      <div class="forgot-links">
+        <span>رمز را به یاد آوردید؟ <a href="{% url 'signin' %}">ورود</a></span>
+        <span style="margin-right:16px;"><a href="{% url 'login' %}">ثبت نام کنید</a></span>
+      </div>
+    </form>
+  </div>
+
+
+</body>
+{% endblock %}
+</html>
