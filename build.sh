@@ -5,7 +5,7 @@ set -o errexit
 pip install -r requirements.txt
 python manage.py migrate
 # Convert static asset files
-python manage.py createsuperuser --noinput
-python manage.py collectstatic --noinput
+python manage.py createsuperuser --no-input
+python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
